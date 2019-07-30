@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.emp.mapper.EmpMapper">
+    
+    <resultMap type="Emp" id="EmpResult">
+        <result property="empno"    column="empno"    />
+        <result property="ename"    column="ename"    />
+        <result property="empsex"    column="empsex"    />
+        <result property="empage"    column="empage"    />
+        <result property="signcount"    column="signcount"    />
+        <result property="empcount"    column="empcount"    />
+        <result property="phone"    column="phone"    />
+        <result property="stagId"    column="stag_id"    />
+    </resultMap>
+	
+	<sql id="selectEmpVo">
+        select empno, ename, empsex, empage, signcount, empcount, phone, stag_id from emp
+    </sql>
+	
+    <select id="selectEmpList" parameterType="Emp" resultMap="EmpResult">
+        <include refid="selectEmpVo"/>
+        <where>  
+            <if test="empno != null "> and empno = #{empno}</if>
+             <if test="ename != null  and ename != '' "> and ename = #{ename}</if>
+             <if test="empsex != null  and empsex != '' "> and empsex = #{empsex}</if>
+             <if test="empage != null "> and empage = #{empage}</if>
+             <if test="signcount != null "> and signcount = #{signcount}</if>
+             <if test="empcount != null "> and empcount = #{empcount}</if>
+             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="stagId != null  and stagId != '' "> and stag_id = #{stagId}</if>
+         </where>
+    </select>
+    
+    <select id="selectEmpById" parameterType="Integer" resultMap="EmpResult">
+        <include refid="selectEmpVo"/>
+        where empno = #{empno}
+    </select>
+        
+    <insert id="insertEmp" parameterType="Emp">
+        insert into emp
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="empno != null  ">empno,</if>
+			<if test="ename != null  and ename != ''  ">ename,</if>
+			<if test="empsex != null  and empsex != ''  ">empsex,</if>
+			<if test="empage != null  ">empage,</if>
+			<if test="signcount != null  ">signcount,</if>
+			<if test="empcount != null  ">empcount,</if>
+			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="stagId != null  and stagId != ''  ">stag_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="empno != null  ">#{empno},</if>
+			<if test="ename != null  and ename != ''  ">#{ename},</if>
+			<if test="empsex != null  and empsex != ''  ">#{empsex},</if>
+			<if test="empage != null  ">#{empage},</if>
+			<if test="signcount != null  ">#{signcount},</if>
+			<if test="empcount != null  ">#{empcount},</if>
+			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="stagId != null  and stagId != ''  ">#{stagId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateEmp" parameterType="Emp">
+        update emp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ename != null  and ename != ''  ">ename = #{ename},</if>
+            <if test="empsex != null  and empsex != ''  ">empsex = #{empsex},</if>
+            <if test="empage != null  ">empage = #{empage},</if>
+            <if test="signcount != null  ">signcount = #{signcount},</if>
+            <if test="empcount != null  ">empcount = #{empcount},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="stagId != null  and stagId != ''  ">stag_id = #{stagId},</if>
+        </trim>
+        where empno = #{empno}
+    </update>
+
+	<delete id="deleteEmpById" parameterType="Integer">
+        delete from emp where empno = #{empno}
+    </delete>
+	
+    <delete id="deleteEmpByIds" parameterType="String">
+        delete from emp where empno in 
+        <foreach item="empno" collection="array" open="(" separator="," close=")">
+            #{empno}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.template.mapper.TemplateMapper">
+    
+    <resultMap type="Template" id="TemplateResult">
+        <result property="templateId"    column="template_id"    />
+        <result property="templateName"    column="template_name"    />
+        <result property="standardId"    column="standard_id"    />
+        <result property="templateDescribe"    column="template_describe"    />
+        <result property="templateComp"    column="template_comp"    />
+        <result property="templateMake"    column="template_make"    />
+        <result property="templateTime"    column="template_time"    />
+    </resultMap>
+	
+	<sql id="selectTemplateVo">
+        select template_id, template_name, standard_id, template_describe, template_comp, template_make, template_time from template
+    </sql>
+	
+    <select id="selectTemplateList" parameterType="Template" resultMap="TemplateResult">
+        <include refid="selectTemplateVo"/>
+        <where>  
+            <if test="templateId != null "> and template_id = #{templateId}</if>
+             <if test="templateName != null  and templateName != '' "> and template_name = #{templateName}</if>
+             <if test="standardId != null "> and standard_id = #{standardId}</if>
+             <if test="templateDescribe != null  and templateDescribe != '' "> and template_describe = #{templateDescribe}</if>
+             <if test="templateComp != null  and templateComp != '' "> and template_comp = #{templateComp}</if>
+             <if test="templateMake != null  and templateMake != '' "> and template_make = #{templateMake}</if>
+             <if test="templateTime != null "> and template_time = #{templateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectTemplateById" parameterType="Integer" resultMap="TemplateResult">
+        <include refid="selectTemplateVo"/>
+        where template_id = #{templateId}
+    </select>
+        
+    <insert id="insertTemplate" parameterType="Template">
+        insert into template
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="templateId != null  ">template_id,</if>
+			<if test="templateName != null  and templateName != ''  ">template_name,</if>
+			<if test="standardId != null  ">standard_id,</if>
+			<if test="templateDescribe != null  and templateDescribe != ''  ">template_describe,</if>
+			<if test="templateComp != null  and templateComp != ''  ">template_comp,</if>
+			<if test="templateMake != null  and templateMake != ''  ">template_make,</if>
+			<if test="templateTime != null  ">template_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="templateId != null  ">#{templateId},</if>
+			<if test="templateName != null  and templateName != ''  ">#{templateName},</if>
+			<if test="standardId != null  ">#{standardId},</if>
+			<if test="templateDescribe != null  and templateDescribe != ''  ">#{templateDescribe},</if>
+			<if test="templateComp != null  and templateComp != ''  ">#{templateComp},</if>
+			<if test="templateMake != null  and templateMake != ''  ">#{templateMake},</if>
+			<if test="templateTime != null  ">#{templateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTemplate" parameterType="Template">
+        update template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="templateName != null  and templateName != ''  ">template_name = #{templateName},</if>
+            <if test="standardId != null  ">standard_id = #{standardId},</if>
+            <if test="templateDescribe != null  and templateDescribe != ''  ">template_describe = #{templateDescribe},</if>
+            <if test="templateComp != null  and templateComp != ''  ">template_comp = #{templateComp},</if>
+            <if test="templateMake != null  and templateMake != ''  ">template_make = #{templateMake},</if>
+            <if test="templateTime != null  ">template_time = #{templateTime},</if>
+        </trim>
+        where template_id = #{templateId}
+    </update>
+
+	<delete id="deleteTemplateById" parameterType="Integer">
+        delete from template where template_id = #{templateId}
+    </delete>
+	
+    <delete id="deleteTemplateByIds" parameterType="String">
+        delete from template where template_id in 
+        <foreach item="templateId" collection="array" open="(" separator="," close=")">
+            #{templateId}
+        </foreach>
+    </delete>
+    
+</mapper>

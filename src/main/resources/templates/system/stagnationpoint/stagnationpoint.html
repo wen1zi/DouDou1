@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								驻点名称：<input type="text" name="stagName"/>
+							</li>
+
+							<li>
+								上级：<input type="text" name="comid"/>
+							</li>
+
+							<li>
+								驻点地址：<input type="text" name="stagAddress"/>
+							</li>
+
+							<li>
+								驻点负责人：<input type="text" name="stagMan"/>
+							</li>
+
+							<li>
+								驻点人联系方式：<input type="text" name="stagPhone"/>
+							</li>
+
+							<li>
+								巡检资源数量：<input type="text" name="stagCount"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:stagnationpoint:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:stagnationpoint:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:stagnationpoint:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:stagnationpoint:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:stagnationpoint:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:stagnationpoint:remove')}]];
+        var prefix = ctx + "system/stagnationpoint";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "驻点管理",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'stagId', 
+					title : '驻点编号',
+					visible: false
+				},
+				{
+					field : 'stagName', 
+					title : '驻点名称',
+					sortable: true
+				},
+				{
+					field : 'comid', 
+					title : '上级',
+					sortable: true
+				},
+				{
+					field : 'stagAddress', 
+					title : '驻点地址',
+					sortable: true
+				},
+				{
+					field : 'stagMan', 
+					title : '驻点负责人',
+					sortable: true
+				},
+				{
+					field : 'stagPhone', 
+					title : '驻点人联系方式',
+					sortable: true
+				},
+				{
+					field : 'stagCount', 
+					title : '巡检资源数量',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.stagId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.stagId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
