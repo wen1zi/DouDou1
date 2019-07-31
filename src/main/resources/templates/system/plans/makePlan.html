@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-plans-edit">
+			<div class="select-list">
+				<ul>
+					<li>
+						<input name="planId" type="hidden" th:value="${plans.planId}"/>
+						<label>模板：</label>
+						<select id="templateId" name="templateId" th:with="type=${@templateServiceImpl.selectTemplateList(null)}" th:onchange="templateChange()">
+							<option th:each="template : ${type}" th:text="${template.templateName}" th:value="${template.templateId}" th:selected="${template.templateId == plans.templateId}"></option>
+						</select>
+					</li>
+				</ul>
+
+
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/plans"
+		$("#form-plans-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-plans-edit').serialize());
+	        }
+	    }
+		var flag = true;
+	    if (flag){
+	    	templateChange();
+		}
+	    var value;
+	    function templateChange(){
+			value = $("#templateId").val();
+			flag = false;
+			console.log(value);
+		}
+	</script>
+</body>
+</html>
