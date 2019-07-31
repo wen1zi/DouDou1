@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="resTime != null "> and res_time = #{resTime}</if>
              <if test="longitude != null "> and longitude = #{longitude}</if>
              <if test="latitude != null "> and latitude = #{latitude}</if>
-             <if test="enable != null "> and enable = #{enable}</if>
+             <if test="enable != null "> and  enable = 1</if>
          </where>
     </select>
     

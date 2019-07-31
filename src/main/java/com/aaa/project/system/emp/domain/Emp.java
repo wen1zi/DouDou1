@@ -1,14 +1,14 @@
 package com.aaa.project.system.emp.domain;
 
-import com.aaa.framework.web.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import com.aaa.framework.web.domain.BaseEntity;
 
 /**
  * 代维公司代维人员表 emp
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
 public class Emp extends BaseEntity
 {
@@ -28,6 +28,8 @@ public class Emp extends BaseEntity
 	private Integer empcount;
 	/** 员工联系方式 */
 	private String phone;
+	/** 密码 */
+	private String password;
 	/** 驻点编号 */
 	private String stagId;
 
@@ -94,6 +96,15 @@ public class Emp extends BaseEntity
 	{
 		return phone;
 	}
+	public void setPassword(String password) 
+	{
+		this.password = password;
+	}
+
+	public String getPassword() 
+	{
+		return password;
+	}
 	public void setStagId(String stagId) 
 	{
 		this.stagId = stagId;
@@ -113,6 +124,7 @@ public class Emp extends BaseEntity
             .append("signcount", getSigncount())
             .append("empcount", getEmpcount())
             .append("phone", getPhone())
+            .append("password", getPassword())
             .append("stagId", getStagId())
             .toString();
     }
