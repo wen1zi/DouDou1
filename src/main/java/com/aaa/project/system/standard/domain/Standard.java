@@ -9,16 +9,18 @@ import java.util.Date;
  * 资源管理规范表 standard
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
 public class Standard extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	
-	/** 规范编号 */
+	/** 序列 */
+	private Integer standardNum;
+	/** 规范型号 */
 	private Integer standardId;
-	/** 资源id号 */
-	private String resId;
+	/** 资源类型 */
+	private String resType;
 	/** 巡检项目 */
 	private String standardEvent;
 	/** 巡检内容 */
@@ -28,6 +30,15 @@ public class Standard extends BaseEntity
 	/** 巡检开始实施时间 */
 	private Date standardTime;
 
+	public void setStandardNum(Integer standardNum) 
+	{
+		this.standardNum = standardNum;
+	}
+
+	public Integer getStandardNum() 
+	{
+		return standardNum;
+	}
 	public void setStandardId(Integer standardId) 
 	{
 		this.standardId = standardId;
@@ -37,14 +48,14 @@ public class Standard extends BaseEntity
 	{
 		return standardId;
 	}
-	public void setResId(String resId) 
+	public void setResType(String resType) 
 	{
-		this.resId = resId;
+		this.resType = resType;
 	}
 
-	public String getResId() 
+	public String getResType() 
 	{
-		return resId;
+		return resType;
 	}
 	public void setStandardEvent(String standardEvent) 
 	{
@@ -83,14 +94,16 @@ public class Standard extends BaseEntity
 		return standardTime;
 	}
 
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("standardId", getStandardId())
-            .append("resId", getResId())
-            .append("standardEvent", getStandardEvent())
-            .append("standardContent", getStandardContent())
-            .append("standardCycle", getStandardCycle())
-            .append("standardTime", getStandardTime())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "Standard{" +
+				"standardNum=" + standardNum +
+				", standardId=" + standardId +
+				", resType='" + resType + '\'' +
+				", standardEvent='" + standardEvent + '\'' +
+				", standardContent='" + standardContent + '\'' +
+				", standardCycle='" + standardCycle + '\'' +
+				", standardTime=" + standardTime +
+				'}';
+	}
 }

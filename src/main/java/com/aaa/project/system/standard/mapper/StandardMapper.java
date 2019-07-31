@@ -7,17 +7,17 @@ import java.util.List;
  * 资源管理规范 数据层
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
 public interface StandardMapper 
 {
 	/**
      * 查询资源管理规范信息
      * 
-     * @param standardId 资源管理规范ID
+     * @param standardNum 资源管理规范ID
      * @return 资源管理规范信息
      */
-	public Standard selectStandardById(Integer standardId);
+	public Standard selectStandardById(Integer standardNum);
 	
 	/**
      * 查询资源管理规范列表
@@ -46,17 +46,17 @@ public interface StandardMapper
 	/**
      * 删除资源管理规范
      * 
-     * @param standardId 资源管理规范ID
+     * @param standardNum 资源管理规范ID
      * @return 结果
      */
-	public int deleteStandardById(Integer standardId);
+	public int deleteStandardById(Integer standardNum);
 	
 	/**
      * 批量删除资源管理规范
      * 
-     * @param standardIds 需要删除的数据ID
+     * @param standardNums 需要删除的数据ID
      * @return 结果
      */
-	public int deleteStandardByIds(String[] standardIds);
+	public int deleteStandardByIds(String[] standardNums);
 	
 }

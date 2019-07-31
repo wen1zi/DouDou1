@@ -23,7 +23,7 @@ import com.aaa.common.utils.poi.ExcelUtil;
  * 资源管理规范 信息操作处理
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
 @Controller
 @RequestMapping("/system/standard")
@@ -92,10 +92,10 @@ public class StandardController extends BaseController
 	/**
 	 * 修改资源管理规范
 	 */
-	@GetMapping("/edit/{standardId}")
-	public String edit(@PathVariable("standardId") Integer standardId, ModelMap mmap)
+	@GetMapping("/edit/{standardNum}")
+	public String edit(@PathVariable("standardNum") Integer standardNum, ModelMap mmap)
 	{
-		Standard standard = standardService.selectStandardById(standardId);
+		Standard standard = standardService.selectStandardById(standardNum);
 		mmap.put("standard", standard);
 	    return prefix + "/edit";
 	}
