@@ -1,5 +1,6 @@
 package com.aaa.project.system.template.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import com.aaa.project.system.standard.domain.Standard;
@@ -8,6 +9,7 @@ import com.aaa.project.system.standard.service.IStandardService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
 import com.aaa.framework.aspectj.lang.annotation.Log;
@@ -21,6 +23,7 @@ import com.aaa.common.utils.poi.ExcelUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * 模版管理 信息操作处理
@@ -36,6 +39,8 @@ public class TemplateController extends BaseController {
     @Autowired
     private ITemplateService templateService;
 
+    @Autowired
+    private IStandardService standardService;
     @RequiresPermissions("system:template:view")
     @GetMapping()
     public String template() {
@@ -71,7 +76,10 @@ public class TemplateController extends BaseController {
      * 新增模版管理
      */
     @GetMapping("/add")
-    public String add() {
+    public String add(HttpSession session) {
+        List<Standard> standards = standardService.selectStandardList(null);
+        System.out.println(standards.size()+"---------------------------");
+        session.setAttribute("standards",standards);
         return prefix + "/add";
     }
 
@@ -83,22 +91,24 @@ public class TemplateController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Template template) {
+        Date date=new Date();
+        template.setTemplateTime(date);
         return toAjax(templateService.insertTemplate(template));
     }
 
-    @Resource
-    private StandardMapper standardMapper;
+
     /**
      * 修改模版管理
      */
     @GetMapping("/edit/{templateId}")
     public String edit(@PathVariable("templateId") Integer templateId, ModelMap mmap) {
-        Standard standard=new Standard();
-        standard.setStandardId(templateId);
-        List<Standard> standards = standardMapper.selectStandardList(standard);
+
         Template template = templateService.selectTemplateById(templateId);
-        System.out.println(standards.size()+"---------------------------");
+        Integer standardId = template.getStandardId();
         mmap.put("template", template);
+        Standard standard=new Standard();
+        standard.setStandardId( standardId);
+        List<Standard> standards = standardService.selectStandardList(standard);
         mmap.put("standards", standards);
         return prefix + "/edit";
     }

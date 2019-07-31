@@ -1,5 +1,6 @@
 package com.aaa.project.system.standard.controller;
 
+import java.util.Date;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +86,9 @@ public class StandardController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Standard standard)
-	{		
+	{
+		Date date=new Date();
+		standard.setStandardTime(date);
 		return toAjax(standardService.insertStandard(standard));
 	}
 
