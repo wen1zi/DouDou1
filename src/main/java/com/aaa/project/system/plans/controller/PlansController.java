@@ -123,5 +123,14 @@ public class PlansController extends BaseController
 	{		
 		return toAjax(plansService.deletePlansByIds(ids));
 	}
+
+
+	@GetMapping("/makePlan/{planId}")
+	public String makePlan(@PathVariable("planId") Integer planId, ModelMap mmap)
+	{
+		Plans plans = plansService.selectPlansById(planId);
+		mmap.put("plans", plans);
+		return prefix + "/makePlan";
+	}
 	
 }
