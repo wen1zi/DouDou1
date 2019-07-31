@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-plans-edit" th:object="${plans}">
+            <input id="planId" name="planId" th:field="*{planId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">计划名称：</label>
+				<div class="col-sm-8">
+					<input id="planName" name="planName" th:field="*{planName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">发送人：</label>
+				<div class="col-sm-8">
+					<input id="planAuthor" name="planAuthor" th:field="*{planAuthor}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">制定时间：</label>
+				<div class="col-sm-8">
+					<input id="planTime" name="planTime" th:field="*{planTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">资源id：</label>
+				<div class="col-sm-8">
+					<input id="resId" name="resId" th:field="*{resId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">代维驻点：</label>
+				<div class="col-sm-8">
+					<input id="stagId" name="stagId" th:field="*{stagId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">审核结果：</label>
+				<div class="col-sm-8">
+					<input id="planResult" name="planResult" th:field="*{planResult}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">模板编号：</label>
+				<div class="col-sm-8">
+					<input id="templateId" name="templateId" th:field="*{templateId}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/plans"
+		$("#form-plans-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-plans-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

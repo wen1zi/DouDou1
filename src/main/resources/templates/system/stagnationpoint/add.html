@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-stagnationpoint-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">驻点名称：</label>
+				<div class="col-sm-8">
+					<input id="stagName" name="stagName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">上级：</label>
+				<div class="col-sm-8">
+					<input id="comid" name="comid" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">驻点地址：</label>
+				<div class="col-sm-8">
+					<input id="stagAddress" name="stagAddress" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">驻点负责人：</label>
+				<div class="col-sm-8">
+					<input id="stagMan" name="stagMan" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">驻点人联系方式：</label>
+				<div class="col-sm-8">
+					<input id="stagPhone" name="stagPhone" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">巡检资源数量：</label>
+				<div class="col-sm-8">
+					<input id="stagCount" name="stagCount" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/stagnationpoint"
+		$("#form-stagnationpoint-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-stagnationpoint-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

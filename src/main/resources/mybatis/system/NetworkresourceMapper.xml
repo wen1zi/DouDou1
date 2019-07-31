@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.networkresource.mapper.NetworkresourceMapper">
+    
+    <resultMap type="Networkresource" id="NetworkresourceResult">
+        <result property="resId"    column="res_id"    />
+        <result property="resName"    column="res_name"    />
+        <result property="resType"    column="res_type"    />
+        <result property="resCity"    column="res_city"    />
+        <result property="resCounty"    column="res_county"    />
+        <result property="stagId"    column="stag_id"    />
+        <result property="resTime"    column="res_time"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="enable"    column="enable"    />
+    </resultMap>
+	
+	<sql id="selectNetworkresourceVo">
+        select res_id, res_name, res_type, res_city, res_county, stag_id, res_time, longitude, latitude, enable from networkresource
+    </sql>
+	
+    <select id="selectNetworkresourceList" parameterType="Networkresource" resultMap="NetworkresourceResult">
+        <include refid="selectNetworkresourceVo"/>
+        <where>  
+            <if test="resId != null "> and res_id = #{resId}</if>
+             <if test="resName != null  and resName != '' "> and res_name = #{resName}</if>
+             <if test="resType != null  and resType != '' "> and res_type = #{resType}</if>
+             <if test="resCity != null  and resCity != '' "> and res_city = #{resCity}</if>
+             <if test="resCounty != null  and resCounty != '' "> and res_county = #{resCounty}</if>
+             <if test="stagId != null  and stagId != '' "> and stag_id = #{stagId}</if>
+             <if test="resTime != null "> and res_time = #{resTime}</if>
+             <if test="longitude != null "> and longitude = #{longitude}</if>
+             <if test="latitude != null "> and latitude = #{latitude}</if>
+             <if test="enable != null "> and enable = #{enable}</if>
+         </where>
+    </select>
+    
+    <select id="selectNetworkresourceById" parameterType="Integer" resultMap="NetworkresourceResult">
+        <include refid="selectNetworkresourceVo"/>
+        where res_id = #{resId}
+    </select>
+        
+    <insert id="insertNetworkresource" parameterType="Networkresource">
+        insert into networkresource
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="resId != null  ">res_id,</if>
+			<if test="resName != null  and resName != ''  ">res_name,</if>
+			<if test="resType != null  and resType != ''  ">res_type,</if>
+			<if test="resCity != null  and resCity != ''  ">res_city,</if>
+			<if test="resCounty != null  and resCounty != ''  ">res_county,</if>
+			<if test="stagId != null  and stagId != ''  ">stag_id,</if>
+			<if test="resTime != null  ">res_time,</if>
+			<if test="longitude != null  ">longitude,</if>
+			<if test="latitude != null  ">latitude,</if>
+			<if test="enable != null  ">enable,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="resId != null  ">#{resId},</if>
+			<if test="resName != null  and resName != ''  ">#{resName},</if>
+			<if test="resType != null  and resType != ''  ">#{resType},</if>
+			<if test="resCity != null  and resCity != ''  ">#{resCity},</if>
+			<if test="resCounty != null  and resCounty != ''  ">#{resCounty},</if>
+			<if test="stagId != null  and stagId != ''  ">#{stagId},</if>
+			<if test="resTime != null  ">#{resTime},</if>
+			<if test="longitude != null  ">#{longitude},</if>
+			<if test="latitude != null  ">#{latitude},</if>
+			<if test="enable != null  ">#{enable},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateNetworkresource" parameterType="Networkresource">
+        update networkresource
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="resName != null  and resName != ''  ">res_name = #{resName},</if>
+            <if test="resType != null  and resType != ''  ">res_type = #{resType},</if>
+            <if test="resCity != null  and resCity != ''  ">res_city = #{resCity},</if>
+            <if test="resCounty != null  and resCounty != ''  ">res_county = #{resCounty},</if>
+            <if test="stagId != null  and stagId != ''  ">stag_id = #{stagId},</if>
+            <if test="resTime != null  ">res_time = #{resTime},</if>
+            <if test="longitude != null  ">longitude = #{longitude},</if>
+            <if test="latitude != null  ">latitude = #{latitude},</if>
+            <if test="enable != null  ">enable = #{enable},</if>
+        </trim>
+        where res_id = #{resId}
+    </update>
+
+	<delete id="deleteNetworkresourceById" parameterType="Integer">
+        delete from networkresource where res_id = #{resId}
+    </delete>
+	
+    <delete id="deleteNetworkresourceByIds" parameterType="String">
+        delete from networkresource where res_id in 
+        <foreach item="resId" collection="array" open="(" separator="," close=")">
+            #{resId}
+        </foreach>
+    </delete>
+    
+</mapper>

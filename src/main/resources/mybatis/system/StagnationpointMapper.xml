@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.stagnationpoint.mapper.StagnationpointMapper">
+    
+    <resultMap type="Stagnationpoint" id="StagnationpointResult">
+        <result property="stagId"    column="stag_id"    />
+        <result property="stagName"    column="stag_name"    />
+        <result property="comid"    column="comid"    />
+        <result property="stagAddress"    column="stag_address"    />
+        <result property="stagMan"    column="stag_man"    />
+        <result property="stagPhone"    column="stag_phone"    />
+        <result property="stagCount"    column="stag_count"    />
+    </resultMap>
+	
+	<sql id="selectStagnationpointVo">
+        select stag_id, stag_name, comid, stag_address, stag_man, stag_phone, stag_count from stagnationpoint
+    </sql>
+	
+    <select id="selectStagnationpointList" parameterType="Stagnationpoint" resultMap="StagnationpointResult">
+        <include refid="selectStagnationpointVo"/>
+        <where>  
+            <if test="stagId != null "> and stag_id = #{stagId}</if>
+             <if test="stagName != null  and stagName != '' "> and stag_name = #{stagName}</if>
+             <if test="comid != null "> and comid = #{comid}</if>
+             <if test="stagAddress != null  and stagAddress != '' "> and stag_address = #{stagAddress}</if>
+             <if test="stagMan != null  and stagMan != '' "> and stag_man = #{stagMan}</if>
+             <if test="stagPhone != null  and stagPhone != '' "> and stag_phone = #{stagPhone}</if>
+             <if test="stagCount != null "> and stag_count = #{stagCount}</if>
+         </where>
+    </select>
+    
+    <select id="selectStagnationpointById" parameterType="Integer" resultMap="StagnationpointResult">
+        <include refid="selectStagnationpointVo"/>
+        where stag_id = #{stagId}
+    </select>
+        
+    <insert id="insertStagnationpoint" parameterType="Stagnationpoint">
+        insert into stagnationpoint
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="stagId != null  ">stag_id,</if>
+			<if test="stagName != null  and stagName != ''  ">stag_name,</if>
+			<if test="comid != null  ">comid,</if>
+			<if test="stagAddress != null  and stagAddress != ''  ">stag_address,</if>
+			<if test="stagMan != null  and stagMan != ''  ">stag_man,</if>
+			<if test="stagPhone != null  and stagPhone != ''  ">stag_phone,</if>
+			<if test="stagCount != null  ">stag_count,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="stagId != null  ">#{stagId},</if>
+			<if test="stagName != null  and stagName != ''  ">#{stagName},</if>
+			<if test="comid != null  ">#{comid},</if>
+			<if test="stagAddress != null  and stagAddress != ''  ">#{stagAddress},</if>
+			<if test="stagMan != null  and stagMan != ''  ">#{stagMan},</if>
+			<if test="stagPhone != null  and stagPhone != ''  ">#{stagPhone},</if>
+			<if test="stagCount != null  ">#{stagCount},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateStagnationpoint" parameterType="Stagnationpoint">
+        update stagnationpoint
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stagName != null  and stagName != ''  ">stag_name = #{stagName},</if>
+            <if test="comid != null  ">comid = #{comid},</if>
+            <if test="stagAddress != null  and stagAddress != ''  ">stag_address = #{stagAddress},</if>
+            <if test="stagMan != null  and stagMan != ''  ">stag_man = #{stagMan},</if>
+            <if test="stagPhone != null  and stagPhone != ''  ">stag_phone = #{stagPhone},</if>
+            <if test="stagCount != null  ">stag_count = #{stagCount},</if>
+        </trim>
+        where stag_id = #{stagId}
+    </update>
+
+	<delete id="deleteStagnationpointById" parameterType="Integer">
+        delete from stagnationpoint where stag_id = #{stagId}
+    </delete>
+	
+    <delete id="deleteStagnationpointByIds" parameterType="String">
+        delete from stagnationpoint where stag_id in 
+        <foreach item="stagId" collection="array" open="(" separator="," close=")">
+            #{stagId}
+        </foreach>
+    </delete>
+    
+</mapper>
