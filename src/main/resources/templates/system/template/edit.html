@@ -43,6 +43,13 @@
 				</div>
 			</div>
 		</form>
+		<div class="col-sm-12 select-table table-striped">
+			<table id="bootstrap-table" data-mobile-responsive="true">
+				<tr th:each="list:${standards}">
+					<td th:text="${list.standardId}"></td>
+				</tr>
+			</table>
+		</div>
     </div>
     <div th:include="include::footer"></div>
     <script type="text/javascript">
@@ -61,5 +68,8 @@
 	        }
 	    }
 	</script>
+
+
 </body>
+
 </html>

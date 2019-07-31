@@ -1,14 +1,13 @@
 package com.aaa.project.system.emp.mapper;
 
 import com.aaa.project.system.emp.domain.Emp;
-
-import java.util.List;
+import java.util.List;	
 
 /**
  * 代维公司代维人员 数据层
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
 public interface EmpMapper 
 {

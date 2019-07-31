@@ -1,14 +1,13 @@
 package com.aaa.project.system.emp.service;
 
 import com.aaa.project.system.emp.domain.Emp;
-
 import java.util.List;
 
 /**
  * 代维公司代维人员 服务层
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
 public interface IEmpService 
 {
