@@ -14,7 +14,7 @@ import com.aaa.common.support.Convert;
  * @author teacherChen
  * @date 2019-07-31
  */
-@Service
+@Service("standardServiceImpl")
 public class StandardServiceImpl implements IStandardService 
 {
 	@Autowired
