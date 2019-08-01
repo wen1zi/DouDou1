@@ -8,9 +8,12 @@ import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.project.system.networkresource.domain.Networkresource;
 import com.aaa.project.system.networkresource.service.INetworkresourceService;
+import com.aaa.project.system.taskinfo.domain.Taskinfo;
+import com.aaa.project.system.taskinfo.service.ITaskinfoService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +22,7 @@ import java.util.List;
 /**
  * 网络资源 信息操作处理
  * 
- * @author teacherChen
+ * @author
  * @date 2019-07-30
  */
 @Controller
@@ -30,6 +33,12 @@ public class NetworkresourceController extends BaseController
 	
 	@Autowired
 	private INetworkresourceService networkresourceService;
+
+	/**
+	 * 自动注入巡检资源关系业务接口
+	 */
+	@Autowired
+	private ITaskinfoService taskinfoService;
 	
 	@RequiresPermissions("system:networkresource:view")
 	@GetMapping()
@@ -75,14 +84,19 @@ public class NetworkresourceController extends BaseController
 	}
 	
 	/**
-	 * 新增保存网络资源
+	 * 新增保存网络资源,同时把资源加入到巡检资源关系库中
 	 */
 	@RequiresPermissions("system:networkresource:add")
 	@Log(title = "网络资源", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
+	@Transactional
 	@ResponseBody
 	public AjaxResult addSave(Networkresource networkresource)
-	{		
+	{
+		Taskinfo taskinfo=new Taskinfo();
+		taskinfo.setResName(networkresource.getResName());
+		taskinfo.setStagId(networkresource.getStagId()!=null?networkresource.getStagId():0);
+		taskinfoService.insertTaskinfo(taskinfo);
 		return toAjax(networkresourceService.insertNetworkresource(networkresource));
 	}
 

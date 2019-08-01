@@ -27,7 +27,7 @@ public class Networkresource extends BaseEntity
 	/** 资源所在县（区） */
 	private String resCounty;
 	/** 代维驻点 */
-	private String stagId;
+	private Integer stagId;
 	/** 入网时间 */
 	private Date resTime;
 	/** 经度 */
@@ -82,12 +82,12 @@ public class Networkresource extends BaseEntity
 	{
 		return resCounty;
 	}
-	public void setStagId(String stagId) 
+	public void setStagId(Integer stagId)
 	{
 		this.stagId = stagId;
 	}
 
-	public String getStagId() 
+	public Integer getStagId()
 	{
 		return stagId;
 	}
@@ -128,18 +128,19 @@ public class Networkresource extends BaseEntity
 		return enable;
 	}
 
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("resId", getResId())
-            .append("resName", getResName())
-            .append("resType", getResType())
-            .append("resCity", getResCity())
-            .append("resCounty", getResCounty())
-            .append("stagId", getStagId())
-            .append("resTime", getResTime())
-            .append("longitude", getLongitude())
-            .append("latitude", getLatitude())
-            .append("enable", getEnable())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "Networkresource{" +
+				"resId=" + resId +
+				", resName='" + resName + '\'' +
+				", resType='" + resType + '\'' +
+				", resCity='" + resCity + '\'' +
+				", resCounty='" + resCounty + '\'' +
+				", stagId=" + stagId +
+				", resTime=" + resTime +
+				", longitude=" + longitude +
+				", latitude=" + latitude +
+				", enable=" + enable +
+				'}';
+	}
 }

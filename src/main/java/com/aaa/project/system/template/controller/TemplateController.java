@@ -77,9 +77,9 @@ public class TemplateController extends BaseController {
      */
     @GetMapping("/add")
     public String add(HttpSession session) {
-        List<Standard> standards = standardService.selectStandardList(null);
-        System.out.println(standards.size()+"---------------------------");
-        session.setAttribute("standards",standards);
+//        List<Standard> standards = standardService.selectStandardList(null);
+//        System.out.println(standards.size()+"---------------------------");
+//        session.setAttribute("standards",standards);
         return prefix + "/add";
     }
 
@@ -121,6 +121,9 @@ public class TemplateController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Template template) {
+
+        Date date=new Date();
+        template.setTemplateTime(date);
         return toAjax(templateService.updateTemplate(template));
     }
 

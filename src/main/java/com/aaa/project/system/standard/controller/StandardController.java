@@ -111,7 +111,9 @@ public class StandardController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Standard standard)
-	{		
+	{
+		Date date=new Date();
+		standard.setStandardTime(date);
 		return toAjax(standardService.updateStandard(standard));
 	}
 	
