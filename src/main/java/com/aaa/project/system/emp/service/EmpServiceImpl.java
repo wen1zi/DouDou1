@@ -1,21 +1,21 @@
 package com.aaa.project.system.emp.service;
 
-import com.aaa.common.support.Convert;
-import com.aaa.project.system.emp.domain.Emp;
-import com.aaa.project.system.emp.mapper.EmpMapper;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import com.aaa.project.system.emp.mapper.EmpMapper;
+import com.aaa.project.system.emp.domain.Emp;
+import com.aaa.project.system.emp.service.IEmpService;
+import com.aaa.common.support.Convert;
 
 /**
  * 代维公司代维人员 服务层实现
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
 @Service
-public class EmpServiceImpl implements IEmpService
+public class EmpServiceImpl implements IEmpService 
 {
 	@Autowired
 	private EmpMapper empMapper;

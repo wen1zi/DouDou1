@@ -1,65 +1,93 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-template-edit" th:object="${template}">
-            <input id="templateId" name="templateId" th:field="*{templateId}"  type="hidden">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">模版名称：</label>
-				<div class="col-sm-8">
-					<input id="templateName" name="templateName" th:field="*{templateName}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">规范编号：</label>
-				<div class="col-sm-8">
-					<input id="standardId" name="standardId" th:field="*{standardId}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">模版概述：</label>
-				<div class="col-sm-8">
-					<input id="templateDescribe" name="templateDescribe" th:field="*{templateDescribe}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">模版制作单位：</label>
-				<div class="col-sm-8">
-					<input id="templateComp" name="templateComp" th:field="*{templateComp}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">模版制作人：</label>
-				<div class="col-sm-8">
-					<input id="templateMake" name="templateMake" th:field="*{templateMake}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">模版制作时间：</label>
-				<div class="col-sm-8">
-					<input id="templateTime" name="templateTime" th:field="*{templateTime}" class="form-control" type="text">
-				</div>
-			</div>
-		</form>
-    </div>
-    <div th:include="include::footer"></div>
-    <script type="text/javascript">
-		var prefix = ctx + "system/template"
-		$("#form-template-edit").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			}
-		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-template-edit').serialize());
-	        }
-	    }
-	</script>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-template-edit" th:object="${template}">
+        <input id="templateId" name="templateId" th:field="*{templateId}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">模版名称：</label>
+            <div class="col-sm-8">
+                <input id="templateName" name="templateName" th:field="*{templateName}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">规范编号：</label>
+            <div class="col-sm-8">
+                <input id="standardId" name="standardId" th:field="*{standardId}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">模版概述：</label>
+            <div class="col-sm-8">
+                <input id="templateDescribe" name="templateDescribe" th:field="*{templateDescribe}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">模版制作单位：</label>
+            <div class="col-sm-8">
+                <input id="templateComp" name="templateComp" th:field="*{templateComp}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">模版制作人：</label>
+            <div class="col-sm-8">
+                <input id="templateMake" name="templateMake" th:field="*{templateMake}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <!--<div class="form-group">-->
+            <!--<label class="col-sm-3 control-label">模版制作时间：</label>-->
+            <!--<div class="col-sm-8">-->
+                <!--<input id="templateTime" name="templateTime" th:field="*{templateTime}" class="form-control"-->
+                       <!--type="text">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">检查规范：</label>
+            <div class="col-sm-8">
+                <table BORDER="1PX" WIDTH="480PX">
+                    <tr>
+                        <td>资源类型</td>
+                        <td>巡检项目</td>
+                        <td>巡检内容</td>
+                        <td>巡检周期</td>
+                    </tr>
+                    <tr th:each="list:${standards}">
+                        <td th:text="${list.resType}"></td>
+                        <td th:text="${list.standardEvent}"></td>
+                        <td th:text="${list.standardContent}"></td>
+                        <td th:text="${list.standardCycle}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    var prefix = ctx + "system/template"
+    $("#form-template-edit").validate({
+        rules: {
+            xxxx: {
+                required: true,
+            },
+        }
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-template-edit').serialize());
+        }
+    }
+</script>
+
+
 </body>
+
 </html>

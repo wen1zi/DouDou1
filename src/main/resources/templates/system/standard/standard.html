@@ -11,7 +11,11 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								资源id号：<input type="text" name="resId"/>
+								规范型号：<input type="text" name="standardId"/>
+							</li>
+
+							<li>
+								资源类型：<input type="text" name="resType"/>
 							</li>
 
 							<li>
@@ -26,9 +30,6 @@
 								巡检周期：<input type="text" name="standardCycle"/>
 							</li>
 
-							<li>
-								巡检开始实施时间：<input type="text" name="standardTime"/>
-							</li>
 
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -78,13 +79,18 @@
 		            checkbox: true
 		        },
 				{
-					field : 'standardId', 
-					title : '规范编号',
+					field : 'standardNum', 
+					title : '序列',
 					visible: false
 				},
 				{
-					field : 'resId', 
-					title : '资源id号',
+					field : 'standardId', 
+					title : '规范型号',
+					sortable: true
+				},
+				{
+					field : 'resType', 
+					title : '资源类型',
 					sortable: true
 				},
 				{
@@ -104,7 +110,7 @@
 				},
 				{
 					field : 'standardTime', 
-					title : '巡检开始实施时间',
+					title : '规范添加时间',
 					sortable: true
 				},
 		        {
@@ -112,8 +118,8 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.standardId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.standardId + '\')"><i class="fa fa-remove"></i>删除</a>');
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.standardNum + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.standardNum + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 		            }
 		        }]
@@ -121,5 +127,6 @@
             $.table.init(options);
         });
     </script>
+
 </body>
 </html>

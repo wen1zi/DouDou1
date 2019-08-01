@@ -14,7 +14,7 @@ import java.util.List;
  * @author teacherChen
  * @date 2019-07-30
  */
-@Service
+@Service("networkresourceServiceImpl")
 public class NetworkresourceServiceImpl implements INetworkresourceService
 {
 	@Autowired

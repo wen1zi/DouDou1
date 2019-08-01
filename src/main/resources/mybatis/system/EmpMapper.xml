@@ -12,11 +12,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="signcount"    column="signcount"    />
         <result property="empcount"    column="empcount"    />
         <result property="phone"    column="phone"    />
+        <result property="password"    column="password"    />
         <result property="stagId"    column="stag_id"    />
     </resultMap>
 	
 	<sql id="selectEmpVo">
-        select empno, ename, empsex, empage, signcount, empcount, phone, stag_id from emp
+        select empno, ename, empsex, empage, signcount, empcount, phone, password, stag_id from emp
     </sql>
 	
     <select id="selectEmpList" parameterType="Emp" resultMap="EmpResult">
@@ -29,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="signcount != null "> and signcount = #{signcount}</if>
              <if test="empcount != null "> and empcount = #{empcount}</if>
              <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="password != null  and password != '' "> and password = #{password}</if>
              <if test="stagId != null  and stagId != '' "> and stag_id = #{stagId}</if>
          </where>
     </select>
@@ -48,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="signcount != null  ">signcount,</if>
 			<if test="empcount != null  ">empcount,</if>
 			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="password != null  and password != ''  ">password,</if>
 			<if test="stagId != null  and stagId != ''  ">stag_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -58,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="signcount != null  ">#{signcount},</if>
 			<if test="empcount != null  ">#{empcount},</if>
 			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="password != null  and password != ''  ">#{password},</if>
 			<if test="stagId != null  and stagId != ''  ">#{stagId},</if>
          </trim>
     </insert>
@@ -71,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="signcount != null  ">signcount = #{signcount},</if>
             <if test="empcount != null  ">empcount = #{empcount},</if>
             <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="password != null  and password != ''  ">password = #{password},</if>
             <if test="stagId != null  and stagId != ''  ">stag_id = #{stagId},</if>
         </trim>
         where empno = #{empno}

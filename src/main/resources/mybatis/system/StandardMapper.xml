@@ -5,8 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.aaa.project.system.standard.mapper.StandardMapper">
     
     <resultMap type="Standard" id="StandardResult">
+        <result property="standardNum"    column="standard_num"    />
         <result property="standardId"    column="standard_id"    />
-        <result property="resId"    column="res_id"    />
+        <result property="resType"    column="res_type"    />
         <result property="standardEvent"    column="standard_event"    />
         <result property="standardContent"    column="standard_content"    />
         <result property="standardCycle"    column="standard_cycle"    />
@@ -14,14 +15,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectStandardVo">
-        select standard_id, res_id, standard_event, standard_content, standard_cycle, standard_time from standard
+        select standard_num, standard_id, res_type, standard_event, standard_content, standard_cycle, standard_time from standard
     </sql>
 	
     <select id="selectStandardList" parameterType="Standard" resultMap="StandardResult">
         <include refid="selectStandardVo"/>
         <where>  
-            <if test="standardId != null "> and standard_id = #{standardId}</if>
-             <if test="resId != null  and resId != '' "> and res_id = #{resId}</if>
+            <if test="standardNum != null "> and standard_num = #{standardNum}</if>
+             <if test="standardId != null "> and standard_id = #{standardId}</if>
+             <if test="resType != null  and resType != '' "> and res_type = #{resType}</if>
              <if test="standardEvent != null  and standardEvent != '' "> and standard_event = #{standardEvent}</if>
              <if test="standardContent != null  and standardContent != '' "> and standard_content = #{standardContent}</if>
              <if test="standardCycle != null  and standardCycle != '' "> and standard_cycle = #{standardCycle}</if>
@@ -31,22 +33,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectStandardById" parameterType="Integer" resultMap="StandardResult">
         <include refid="selectStandardVo"/>
-        where standard_id = #{standardId}
+        where standard_num = #{standardNum}
     </select>
         
     <insert id="insertStandard" parameterType="Standard">
         insert into standard
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="standardNum != null  ">standard_num,</if>
 			<if test="standardId != null  ">standard_id,</if>
-			<if test="resId != null  and resId != ''  ">res_id,</if>
+			<if test="resType != null  and resType != ''  ">res_type,</if>
 			<if test="standardEvent != null  and standardEvent != ''  ">standard_event,</if>
 			<if test="standardContent != null  and standardContent != ''  ">standard_content,</if>
 			<if test="standardCycle != null  and standardCycle != ''  ">standard_cycle,</if>
 			<if test="standardTime != null  ">standard_time,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="standardNum != null  ">#{standardNum},</if>
 			<if test="standardId != null  ">#{standardId},</if>
-			<if test="resId != null  and resId != ''  ">#{resId},</if>
+			<if test="resType != null  and resType != ''  ">#{resType},</if>
 			<if test="standardEvent != null  and standardEvent != ''  ">#{standardEvent},</if>
 			<if test="standardContent != null  and standardContent != ''  ">#{standardContent},</if>
 			<if test="standardCycle != null  and standardCycle != ''  ">#{standardCycle},</if>
@@ -57,23 +61,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateStandard" parameterType="Standard">
         update standard
         <trim prefix="SET" suffixOverrides=",">
-            <if test="resId != null  and resId != ''  ">res_id = #{resId},</if>
+            <if test="standardId != null  ">standard_id = #{standardId},</if>
+            <if test="resType != null  and resType != ''  ">res_type = #{resType},</if>
             <if test="standardEvent != null  and standardEvent != ''  ">standard_event = #{standardEvent},</if>
             <if test="standardContent != null  and standardContent != ''  ">standard_content = #{standardContent},</if>
             <if test="standardCycle != null  and standardCycle != ''  ">standard_cycle = #{standardCycle},</if>
             <if test="standardTime != null  ">standard_time = #{standardTime},</if>
         </trim>
-        where standard_id = #{standardId}
+        where standard_num = #{standardNum}
     </update>
 
 	<delete id="deleteStandardById" parameterType="Integer">
-        delete from standard where standard_id = #{standardId}
+        delete from standard where standard_num = #{standardNum}
     </delete>
 	
     <delete id="deleteStandardByIds" parameterType="String">
-        delete from standard where standard_id in 
-        <foreach item="standardId" collection="array" open="(" separator="," close=")">
-            #{standardId}
+        delete from standard where standard_num in 
+        <foreach item="standardNum" collection="array" open="(" separator="," close=")">
+            #{standardNum}
         </foreach>
     </delete>
     
