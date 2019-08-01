@@ -46,6 +46,7 @@ public class NetworkresourceController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(Networkresource networkresource)
 	{
+		networkresource.setEnable(1);
 		startPage();
         List<Networkresource> list = networkresourceService.selectNetworkresourceList(networkresource);
 		return getDataTable(list);
@@ -117,7 +118,8 @@ public class NetworkresourceController extends BaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
+
+	{
 		return toAjax(networkresourceService.deleteNetworkresourceByIds(ids));
 	}
 	
