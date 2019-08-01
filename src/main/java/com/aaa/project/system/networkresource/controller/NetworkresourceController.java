@@ -96,7 +96,7 @@ public class NetworkresourceController extends BaseController
 	{
 		Taskinfo taskinfo=new Taskinfo();
 		taskinfo.setResName(networkresource.getResName());
-		taskinfo.setStagId(networkresource.getStagId()!=null?networkresource.getStagId():0);
+		taskinfo.setStagId(networkresource.getStagId());
 		taskinfoService.insertTaskinfo(taskinfo);
 		return toAjax(networkresourceService.insertNetworkresource(networkresource));
 	}

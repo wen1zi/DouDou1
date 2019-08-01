@@ -16,7 +16,7 @@ public class Taskinfo extends BaseEntity
 	
 	/** 序列 */
 	private Integer taskNum;
-	/** 资源编号 */
+	/** 资源名称 */
 	private String resName;
 	/** 驻点编号 */
 	private Integer stagId;

@@ -23,7 +23,12 @@
 							</li>
 
 							<li>
-								分配状态：<input type="text" name="taskStatus"/>
+								分配状态：
+								<select  name="taskStatus">
+									<option value="">--请选择--</option>
+									<option>已分配</option>
+									<option>未分配</option>
+								</select>
 							</li>
 
 							<li>
@@ -37,14 +42,14 @@
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
 				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:taskinfo:add">
-					<i class="fa fa-plus"></i> 添加
+					<i class="fa fa-plus"></i> 添加计划
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:taskinfo:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:taskinfo:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
+				<!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:taskinfo:edit">-->
+					<!--<i class="fa fa-edit"></i> 修改-->
+				<!--</a>-->
+				<!--<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:taskinfo:remove">-->
+					<!--<i class="fa fa-remove"></i> 批量释放资源-->
+				<!--</a>-->
 				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:taskinfo:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
@@ -59,6 +64,14 @@
         var editFlag = [[${@permission.hasPermi('system:taskinfo:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:taskinfo:remove')}]];
         var prefix = ctx + "system/taskinfo";
+
+         function modify(id) {
+            $.modal.confirm("确定释放" + $.table._option.modalName + "资源吗？", function() {
+                var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
+                var data = { "ids": id };
+                $.operate.submit(url, "post", "json", data);
+            });
+        }
 
         $(function() {
             var options = {
@@ -103,8 +116,8 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.taskNum + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.taskNum + '\')"><i class="fa fa-remove"></i>删除</a>');
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.taskNum + '\')"><i class="fa fa-edit"></i>分配资源</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="modify(\'' + row.taskNum + '\')"><i class="fa fa-remove"></i>释放资源</a>');
 						return actions.join('');
 		            }
 		        }]
