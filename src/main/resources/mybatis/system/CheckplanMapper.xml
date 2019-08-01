@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.checkplan.mapper.CheckplanMapper">
+    
+    <resultMap type="Checkplan" id="CheckplanResult">
+        <result property="checkId"    column="check_id"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="checkMan"    column="check_man"    />
+        <result property="checkTime"    column="check_time"    />
+        <result property="checkReasons"    column="check_reasons"    />
+    </resultMap>
+	
+	<sql id="selectCheckplanVo">
+        select check_id, plan_id, check_man, check_time, check_reasons from checkplan
+    </sql>
+	
+    <select id="selectCheckplanList" parameterType="Checkplan" resultMap="CheckplanResult">
+        <include refid="selectCheckplanVo"/>
+        <where>  
+            <if test="checkId != null "> and check_id = #{checkId}</if>
+             <if test="planId != null  and planId != '' "> and plan_id = #{planId}</if>
+             <if test="checkMan != null  and checkMan != '' "> and check_man = #{checkMan}</if>
+             <if test="checkTime != null "> and check_time = #{checkTime}</if>
+             <if test="checkReasons != null  and checkReasons != '' "> and check_reasons = #{checkReasons}</if>
+         </where>
+    </select>
+    
+    <select id="selectCheckplanById" parameterType="Integer" resultMap="CheckplanResult">
+        <include refid="selectCheckplanVo"/>
+        where check_id = #{checkId}
+    </select>
+        
+    <insert id="insertCheckplan" parameterType="Checkplan">
+        insert into checkplan
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="checkId != null  ">check_id,</if>
+			<if test="planId != null  and planId != ''  ">plan_id,</if>
+			<if test="checkMan != null  and checkMan != ''  ">check_man,</if>
+			<if test="checkTime != null  ">check_time,</if>
+			<if test="checkReasons != null  and checkReasons != ''  ">check_reasons,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="checkId != null  ">#{checkId},</if>
+			<if test="planId != null  and planId != ''  ">#{planId},</if>
+			<if test="checkMan != null  and checkMan != ''  ">#{checkMan},</if>
+			<if test="checkTime != null  ">#{checkTime},</if>
+			<if test="checkReasons != null  and checkReasons != ''  ">#{checkReasons},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCheckplan" parameterType="Checkplan">
+        update checkplan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planId != null  and planId != ''  ">plan_id = #{planId},</if>
+            <if test="checkMan != null  and checkMan != ''  ">check_man = #{checkMan},</if>
+            <if test="checkTime != null  ">check_time = #{checkTime},</if>
+            <if test="checkReasons != null  and checkReasons != ''  ">check_reasons = #{checkReasons},</if>
+        </trim>
+        where check_id = #{checkId}
+    </update>
+
+	<delete id="deleteCheckplanById" parameterType="Integer">
+        delete from checkplan where check_id = #{checkId}
+    </delete>
+	
+    <delete id="deleteCheckplanByIds" parameterType="String">
+        delete from checkplan where check_id in 
+        <foreach item="checkId" collection="array" open="(" separator="," close=")">
+            #{checkId}
+        </foreach>
+    </delete>
+    
+</mapper>
