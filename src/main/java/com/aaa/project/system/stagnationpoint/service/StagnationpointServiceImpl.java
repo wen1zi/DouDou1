@@ -14,7 +14,7 @@ import com.aaa.common.support.Convert;
  * @author teacherChen
  * @date 2019-07-30
  */
-@Service
+@Service("stagnationpointServiceImpl")
 public class StagnationpointServiceImpl implements IStagnationpointService 
 {
 	@Autowired

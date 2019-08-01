@@ -7,17 +7,17 @@ import java.util.List;
  * 资源管理规范 服务层
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
 public interface IStandardService 
 {
 	/**
      * 查询资源管理规范信息
      * 
-     * @param standardId 资源管理规范ID
+     * @param standardNum 资源管理规范ID
      * @return 资源管理规范信息
      */
-	public Standard selectStandardById(Integer standardId);
+	public Standard selectStandardById(Integer standardNum);
 	
 	/**
      * 查询资源管理规范列表

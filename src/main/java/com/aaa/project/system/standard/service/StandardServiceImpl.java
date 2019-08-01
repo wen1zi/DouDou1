@@ -12,9 +12,9 @@ import com.aaa.common.support.Convert;
  * 资源管理规范 服务层实现
  * 
  * @author teacherChen
- * @date 2019-07-30
+ * @date 2019-07-31
  */
-@Service
+@Service("standardServiceImpl")
 public class StandardServiceImpl implements IStandardService 
 {
 	@Autowired
@@ -23,13 +23,13 @@ public class StandardServiceImpl implements IStandardService
 	/**
      * 查询资源管理规范信息
      * 
-     * @param standardId 资源管理规范ID
+     * @param standardNum 资源管理规范ID
      * @return 资源管理规范信息
      */
     @Override
-	public Standard selectStandardById(Integer standardId)
+	public Standard selectStandardById(Integer standardNum)
 	{
-	    return standardMapper.selectStandardById(standardId);
+	    return standardMapper.selectStandardById(standardNum);
 	}
 	
 	/**

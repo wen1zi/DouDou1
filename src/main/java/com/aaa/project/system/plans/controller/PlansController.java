@@ -1,6 +1,9 @@
 package com.aaa.project.system.plans.controller;
 
 import java.util.List;
+
+import com.aaa.project.system.template.domain.Template;
+import com.aaa.project.system.template.service.ITemplateService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,8 @@ public class PlansController extends BaseController
 	
 	@Autowired
 	private IPlansService plansService;
+	@Autowired
+	private ITemplateService templateService;
 	
 	@RequiresPermissions("system:plans:view")
 	@GetMapping()
@@ -108,7 +113,8 @@ public class PlansController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Plans plans)
-	{		
+	{
+		plans.setPlanResult("1");
 		return toAjax(plansService.updatePlans(plans));
 	}
 	
@@ -122,6 +128,23 @@ public class PlansController extends BaseController
 	public AjaxResult remove(String ids)
 	{		
 		return toAjax(plansService.deletePlansByIds(ids));
+	}
+
+
+	@GetMapping("/makePlan/{planId}")
+	public String makePlan(@PathVariable("planId") Integer planId, ModelMap mmap)
+	{
+		Plans plans = plansService.selectPlansById(planId);
+		Template template = templateService.selectTemplateById(plans.getTemplateId());
+
+		mmap.put("plans", plans);
+		mmap.put("template",template);
+		if(plans.getPlanResult().equals("0")){
+			return prefix + "/makePlan";
+		}else{
+			return prefix + "/showPlan";
+		}
+
 	}
 	
 }

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="container-div">
+	<div class="row">
+		<div class="col-sm-12 select-table table-striped">
+			<label>模板：</label><span id="standardId" th:value="${template.standardId}" th:text="${template.templateName}"></span>
+			<table id="bootstrap-table" data-mobile-responsive="false"></table>
+		</div>
+	</div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+	var editFlag = [[${@permission.hasPermi('system:standard:edit')}]];
+	var removeFlag = [[${@permission.hasPermi('system:standard:remove')}]];
+	var prefix = ctx + "system/standard";
+
+	$(function() {
+		var options = {
+			url: prefix + "/list?standardId=" + [[${template.standardId}]],
+			columns: [{
+					field : 'standardNum',
+					title : '序列',
+					visible: false
+				},
+				{
+					field : 'standardId',
+					title : '规范型号',
+					sortable: true
+				},
+				{
+					field : 'resType',
+					title : '资源类型',
+					sortable: true
+				},
+				{
+					field : 'standardEvent',
+					title : '巡检项目',
+					sortable: true
+				},
+				{
+					field : 'standardContent',
+					title : '巡检内容',
+					sortable: true
+				},
+				{
+					field : 'standardCycle',
+					title : '巡检周期',
+					sortable: true
+				},
+				{
+					field : 'standardTime',
+					title : '巡检开始实施时间',
+					sortable: true
+				}]
+		};
+		$.table.init(options);
+	});
+</script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package com.aaa.project.system.plans.domain;
 
+import com.aaa.project.system.networkresource.domain.Networkresource;
+import com.aaa.project.system.stagnationpoint.domain.Stagnationpoint;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -34,7 +36,7 @@ public class Plans extends BaseEntity
 	/** 模板编号 */
 	private Integer templateId;
 
-	public void setPlanId(Integer planId) 
+	public void setPlanId(Integer planId)
 	{
 		this.planId = planId;
 	}

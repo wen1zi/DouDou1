@@ -26,15 +26,6 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:plans:add">
-					<i class="fa fa-plus"></i> 添加
-				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:plans:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:plans:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
 				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:plans:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
@@ -47,6 +38,7 @@
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:plans:edit')}]];
+		var makePlanFlag = [[${@permission.hasPermi('system:plans:makePlan')}]];
         var removeFlag = [[${@permission.hasPermi('system:plans:remove')}]];
         var prefix = ctx + "system/plans";
 
@@ -54,7 +46,7 @@
             var options = {
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
+                updateUrl: prefix + "/makePlan/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
                 modalName: "代维计划",
@@ -84,32 +76,49 @@
 					sortable: true
 				},
 				{
-					field : 'resId', 
-					title : '资源id',
-					sortable: true
-				},
-				{
-					field : 'stagId', 
+					field : 'resId',
 					title : '代维驻点',
-					sortable: true
+					formatter:function (value) {
+						var datas = [[${@networkresourceServiceImpl.selectNetworkresourceList(null)}]];
+						for(var i = 0;i<datas.length;i++){
+							if(datas[i].resId == value){
+								return datas[i].resName;
+							}
+						}
+					}
 				},
 				{
 					field : 'planResult', 
-					title : '审核结果',
-					sortable: true
-				},
-				{
-					field : 'templateId', 
-					title : '模板编号',
-					sortable: true
+					title : '状态',
+					formatter:function (value) {
+						switch (value) {
+							case '0':
+								return "未制定";
+								break;
+							case '1':
+								return "已制定";
+								break;
+							case '2':
+								return "通过";
+								break;
+							case '3':
+								return "不通过";
+								break;
+						}
+					}
 				},
 		        {
 		            title: '操作',
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.planId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.planId + '\')"><i class="fa fa-remove"></i>删除</a>');
+		            	if(row.planResult == 0){
+                            actions.push('<a class="btn btn-success btn-xs ' + makePlanFlag + '" href="#" onclick="$.operate.edit(\'' + row.planId + '\')"><i class="fa fa-edit"></i>制定计划</a> ');
+                        }else{
+                            actions.push('<a class="btn btn-success btn-xs ' + makePlanFlag + '" href="#" onclick="$.operate.edit(\'' + row.planId + '\')"><i class="fa fa-edit"></i>查看模板</a> ');
+                        }
+
+                        /*actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.planId + '\')"><i class="fa fa-remove"></i>删除</a>');*/
 						return actions.join('');
 		            }
 		        }]
