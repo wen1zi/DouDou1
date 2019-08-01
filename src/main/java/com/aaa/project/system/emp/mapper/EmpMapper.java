@@ -26,7 +26,8 @@ public interface EmpMapper
      * @return 代维公司代维人员集合
      */
 	public List<Emp> selectEmpList(Emp emp);
-	
+
+	Emp selectEmp(Emp emp);
 	/**
      * 新增代维公司代维人员
      * 

@@ -53,7 +53,20 @@ public class EmpController extends BaseController
         List<Emp> list = empService.selectEmpList(emp);
 		return getDataTable(list);
 	}
-	
+
+	/**
+	 * 手机端的用户登录
+	 */
+	@PostMapping("/login")
+	@ResponseBody
+	 public boolean login(String phone,String password){
+		System.out.println("微信小程序调用接口！！用户名为"+phone+"密码为"+password);
+		boolean login = empService.empLogin(phone, password);
+		if (login){
+			return true;
+		}
+		return false;
+	}
 	
 	/**
 	 * 导出代维公司代维人员列表
@@ -84,8 +97,8 @@ public class EmpController extends BaseController
 	@Log(title = "代维公司代维人员", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(Emp emp)
-	{		
+	public AjaxResult addSave(Emp emp) {
+
 		return toAjax(empService.insertEmp(emp));
 	}
 
