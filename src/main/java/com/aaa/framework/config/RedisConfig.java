@@ -20,7 +20,7 @@ import java.util.Set;
  * redis相关配置
  * @Version 1.0
  */
-@Configuration
+/*@Configuration
 @PropertySource("classpath:redis.properties")
 @ConfigurationProperties(prefix = "redis")
 public class RedisConfig {
@@ -148,11 +148,11 @@ public class RedisConfig {
             return jcf;
         }*/
         //使用中间类解决静态注入
-        @Bean("redisCacheTransfer")
+       /* @Bean("redisCacheTransfer")
        public RedisCacheTransfer getRedisCacheTransfer(){
            RedisCacheTransfer redisCacheTransfer=new RedisCacheTransfer();
            redisCacheTransfer.setJedisConnectionFactory(getjedisConnectionFactory());
            return redisCacheTransfer;
         }
 
-}
+}*/

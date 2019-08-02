@@ -49,7 +49,7 @@ public class PlansController extends BaseController
 	/**
 	 * 查询代维计划列表
 	 */
-	@RequiresPermissions("system:plans:list")
+	//@RequiresPermissions("system:plans:list")
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(Plans plans)

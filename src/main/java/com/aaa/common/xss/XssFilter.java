@@ -20,18 +20,19 @@ import com.aaa.common.utils.StringUtils;
  * 
  * @author teacherChen
  */
+
+
 public class XssFilter implements Filter
 {
+
     /**
      * 排除链接
      */
     public List<String> excludes = new ArrayList<>();
-
     /**
      * xss过滤开关
      */
     public boolean enabled = false;
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException
     {
@@ -50,7 +51,6 @@ public class XssFilter implements Filter
             enabled = Boolean.valueOf(tempEnabled);
         }
     }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException
@@ -62,7 +62,7 @@ public class XssFilter implements Filter
             chain.doFilter(request, response);
             return;
         }
-        XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request);
+    XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request);
         chain.doFilter(xssRequest, response);
     }
 

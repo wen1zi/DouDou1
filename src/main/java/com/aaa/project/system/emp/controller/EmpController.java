@@ -44,8 +44,9 @@ public class EmpController extends BaseController
 	/**
 	 * 查询代维公司代维人员列表
 	 */
-	@RequiresPermissions("system:emp:list")
+	
 	@PostMapping("/list")
+	//@RequestMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(Emp emp)
 	{
