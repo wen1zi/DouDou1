@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 网络资源表 networkresource
  * 
- * @author teacherChen
+ * @author
  * @date 2019-07-30
  */
 public class Networkresource extends BaseEntity
@@ -27,6 +27,10 @@ public class Networkresource extends BaseEntity
 	private String resCounty;
 	/** 代维驻点 */
 	private Integer stagId;
+	/**
+	 * 驻点名称
+	 */
+	private String stagName;
 	/** 入网时间 */
 	@JSONField(format ="yyyy-MM-dd HH:mm:ss")
 	private Date resTime;
@@ -128,6 +132,14 @@ public class Networkresource extends BaseEntity
 		return enable;
 	}
 
+	public String getStagName() {
+		return stagName;
+	}
+
+	public void setStagName(String stagName) {
+		this.stagName = stagName;
+	}
+
 	@Override
 	public String toString() {
 		return "Networkresource{" +
@@ -137,6 +149,7 @@ public class Networkresource extends BaseEntity
 				", resCity='" + resCity + '\'' +
 				", resCounty='" + resCounty + '\'' +
 				", stagId=" + stagId +
+				", stagName='" + stagName + '\'' +
 				", resTime=" + resTime +
 				", longitude=" + longitude +
 				", latitude=" + latitude +

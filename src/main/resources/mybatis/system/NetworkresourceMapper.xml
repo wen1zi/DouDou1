@@ -10,20 +10,24 @@
         <result property="resType" column="res_type"/>
         <result property="resCity" column="res_city"/>
         <result property="resCounty" column="res_county"/>
-        <result property="stagId" column="stag_id"/>
+        <result property="stagId" column="n.stag_id"/>
         <result property="resTime" column="res_time"/>
         <result property="longitude" column="longitude"/>
         <result property="latitude" column="latitude"/>
         <result property="enable" column="enable"/>
+        <result property="stagName" column="stag_name"/>
     </resultMap>
 
     <sql id="selectNetworkresourceVo">
-        select res_id, res_name, res_type, res_city, res_county, stag_id, res_time, longitude, latitude, enable from networkresource
+--         select res_id, res_name, res_type, res_city, res_county, stag_id, res_time, longitude, latitude, enable from networkresource
+    select res_id,res_name,res_type,res_city,res_county,stag_name,n.stag_id,res_time,longitude,latitude,enable
+    from networkresource n left join stagnationpoint s on n.stag_id=s.stag_id
     </sql>
 
     <select id="selectNetworkresourceList" parameterType="Networkresource" resultMap="NetworkresourceResult">
         <include refid="selectNetworkresourceVo"/>
         <where>
+            enable=1
             <if test="resId != null ">and res_id = #{resId}</if>
             <if test="resName != null  and resName != '' ">and res_name = #{resName}</if>
             <if test="resType != null  and resType != '' ">and res_type = #{resType}</if>
@@ -33,7 +37,7 @@
             <if test="resTime != null ">and res_time = #{resTime}</if>
             <if test="longitude != null ">and longitude = #{longitude}</if>
             <if test="latitude != null ">and latitude = #{latitude}</if>
-            <if test="enable != null ">and enable =#{enable}</if>
+            <!--<if test="enable != null ">and enable =#{enable}</if>-->
 
         </where>
 

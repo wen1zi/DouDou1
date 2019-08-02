@@ -5,6 +5,8 @@ import java.util.List;
 import com.aaa.project.system.networkresource.domain.Networkresource;
 import com.aaa.project.system.networkresource.mapper.NetworkresourceMapper;
 import com.aaa.project.system.networkresource.service.INetworkresourceService;
+import com.aaa.project.system.stagnationpoint.domain.Stagnationpoint;
+import com.aaa.project.system.stagnationpoint.service.IStagnationpointService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,8 @@ public class TaskinfoController extends BaseController
 	@Autowired
 	private ITaskinfoService taskinfoService;
 
+	@Autowired
+	private IStagnationpointService stagnationpointService;
 	@Resource
 	private NetworkresourceMapper networkresourceMapper;
 
@@ -105,6 +109,8 @@ public class TaskinfoController extends BaseController
 	@GetMapping("/edit/{taskNum}")
 	public String edit(@PathVariable("taskNum") Integer taskNum, ModelMap mmap)
 	{
+		List<Stagnationpoint> stagnationpoints = stagnationpointService.selectStagnationpointList(null);
+		mmap.put("stagnationpoints",stagnationpoints);
 		Taskinfo taskinfo = taskinfoService.selectTaskinfoById(taskNum);
 		mmap.put("taskinfo", taskinfo);
 	    return prefix + "/edit";

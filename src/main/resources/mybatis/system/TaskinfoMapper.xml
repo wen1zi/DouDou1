@@ -10,10 +10,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="stagId"    column="stag_id"    />
         <result property="taskAuthor"    column="task_author"    />
         <result property="taskStatus"    column="task_status"    />
+        <result property="stagName"    column="stag_name"    />
     </resultMap>
 	
 	<sql id="selectTaskinfoVo">
-        select task_num, res_name, stag_id, task_author, task_status from taskinfo
+--         select task_num, res_name, stag_id, task_author, task_status from taskinfo
+        select task_num,res_name,stag_name,t.stag_id as stag_id,task_author,task_status from
+        taskinfo t LEFT JOIN stagnationpoint s on t.stag_id=s.stag_id
     </sql>
 	
     <select id="selectTaskinfoList" parameterType="Taskinfo" resultMap="TaskinfoResult">
@@ -21,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="taskNum != null "> and task_num = #{taskNum}</if>
              <if test="resName != null  and resName != '' "> and res_name = #{resName}</if>
-             <if test="stagId != null "> and stag_id = #{stagId}</if>
+             <if test="stagId != null "> and  = #{stagId}</if>
              <if test="taskAuthor != null  and taskAuthor != '' "> and task_author = #{taskAuthor}</if>
              <if test="taskStatus != null  and taskStatus != '' "> and task_status = #{taskStatus}</if>
          </where>
@@ -37,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="taskNum != null  ">task_num,</if>
 			<if test="resName != null  and resName != ''  ">res_name,</if>
-			<if test="stagId != null  ">stag_id,</if>
+			<if test="stagId != null  ">t.stag_id,</if>
 			<if test="taskAuthor != null  and taskAuthor != ''  ">task_author,</if>
 			<if test="taskStatus != null  and taskStatus != ''  ">task_status,</if>
          </trim>

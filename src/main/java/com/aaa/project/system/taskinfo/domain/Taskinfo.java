@@ -20,6 +20,10 @@ public class Taskinfo extends BaseEntity
 	private String resName;
 	/** 驻点编号 */
 	private Integer stagId;
+	/**
+	 * 驻点名称
+	 */
+	private String stagName;
 	/** 派发人 */
 	private String taskAuthor;
 	/** 分配状态 */
@@ -71,13 +75,23 @@ public class Taskinfo extends BaseEntity
 		return taskStatus;
 	}
 
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("taskNum", getTaskNum())
-            .append("resName", getResName())
-            .append("stagId", getStagId())
-            .append("taskAuthor", getTaskAuthor())
-            .append("taskStatus", getTaskStatus())
-            .toString();
-    }
+	public String getStagName() {
+		return stagName;
+	}
+
+	public void setStagName(String stagName) {
+		this.stagName = stagName;
+	}
+
+	@Override
+	public String toString() {
+		return "Taskinfo{" +
+				"taskNum=" + taskNum +
+				", resName='" + resName + '\'' +
+				", stagId=" + stagId +
+				", stagName='" + stagName + '\'' +
+				", taskAuthor='" + taskAuthor + '\'' +
+				", taskStatus='" + taskStatus + '\'' +
+				'}';
+	}
 }
