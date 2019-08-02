@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.networkresource.mapper.NetworkresourceMapper">
+    
+    <resultMap type="Networkresource" id="NetworkresourceResult">
+        <result property="resId"    column="res_id"    />
+        <result property="resName"    column="res_name"    />
+        <result property="resCity"    column="res_city"    />
+        <result property="resTime"    column="res_time"    />
+        <result property="longitudelatitude"    column="longitudelatitude"    />
+        <result property="enable"    column="enable"    />
+    </resultMap>
+	
+	<sql id="selectNetworkresourceVo">
+        select res_id, res_name, res_city, res_time, longitudelatitude, enable from networkresource
+    </sql>
+	
+    <select id="selectNetworkresourceList" parameterType="Networkresource" resultMap="NetworkresourceResult">
+        <include refid="selectNetworkresourceVo"/>
+        <where>  
+            <if test="resId != null  and resId != '' "> and res_id = #{resId}</if>
+             <if test="resName != null  and resName != '' "> and res_name = #{resName}</if>
+             <if test="resCity != null  and resCity != '' "> and res_city = #{resCity}</if>
+             <if test="resTime != null "> and res_time = #{resTime}</if>
+             <if test="longitudelatitude != null  and longitudelatitude != '' "> and longitudelatitude = #{longitudelatitude}</if>
+             <if test="enable != null "> and enable = #{enable}</if>
+         </where>
+    </select>
+    
+    <select id="selectNetworkresourceById" parameterType="String" resultMap="NetworkresourceResult">
+        <include refid="selectNetworkresourceVo"/>
+        where res_id = #{resId}
+    </select>
+        
+    <insert id="insertNetworkresource" parameterType="Networkresource">
+        insert into networkresource
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="resId != null  and resId != ''  ">res_id,</if>
+			<if test="resName != null  and resName != ''  ">res_name,</if>
+			<if test="resCity != null  and resCity != ''  ">res_city,</if>
+			<if test="resTime != null  ">res_time,</if>
+			<if test="longitudelatitude != null  and longitudelatitude != ''  ">longitudelatitude,</if>
+			<if test="enable != null  ">enable,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="resId != null  and resId != ''  ">#{resId},</if>
+			<if test="resName != null  and resName != ''  ">#{resName},</if>
+			<if test="resCity != null  and resCity != ''  ">#{resCity},</if>
+			<if test="resTime != null  ">#{resTime},</if>
+			<if test="longitudelatitude != null  and longitudelatitude != ''  ">#{longitudelatitude},</if>
+			<if test="enable != null  ">#{enable},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateNetworkresource" parameterType="Networkresource">
+        update networkresource
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="resName != null  and resName != ''  ">res_name = #{resName},</if>
+            <if test="resCity != null  and resCity != ''  ">res_city = #{resCity},</if>
+            <if test="resTime != null  ">res_time = #{resTime},</if>
+            <if test="longitudelatitude != null  and longitudelatitude != ''  ">longitudelatitude = #{longitudelatitude},</if>
+            <if test="enable != null  ">enable = #{enable},</if>
+        </trim>
+        where res_id = #{resId}
+    </update>
+
+	<delete id="deleteNetworkresourceById" parameterType="String">
+        delete from networkresource where res_id = #{resId}
+    </delete>
+	
+    <delete id="deleteNetworkresourceByIds" parameterType="String">
+        delete from networkresource where res_id in 
+        <foreach item="resId" collection="array" open="(" separator="," close=")">
+            #{resId}
+        </foreach>
+    </delete>
+    
+</mapper>
