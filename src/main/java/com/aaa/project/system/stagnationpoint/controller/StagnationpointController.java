@@ -22,7 +22,7 @@ import com.aaa.common.utils.poi.ExcelUtil;
 /**
  * 驻点管理 信息操作处理
  * 
- * @author teacherChen
+ * @author
  * @date 2019-07-30
  */
 @Controller
@@ -40,7 +40,7 @@ public class StagnationpointController extends BaseController
 	{
 	    return prefix + "/stagnationpoint";
 	}
-	
+
 	/**
 	 * 查询驻点管理列表
 	 */
@@ -53,7 +53,30 @@ public class StagnationpointController extends BaseController
         List<Stagnationpoint> list = stagnationpointService.selectStagnationpointList(stagnationpoint);
 		return getDataTable(list);
 	}
-	
+	@RequestMapping("/toStatisticsPage")
+	public String toStatisticsPage()
+	{
+		return prefix + "/statistics";
+	}
+	@RequestMapping("/toStatisticsCityPage")
+	public String toStatisticsCityPage()
+	{
+		return prefix + "/statisticsByCity";
+	}
+
+	/**
+	 * 查询驻点管理列表
+	 */
+	@RequiresPermissions("system:stagnationpoint:list")
+	@PostMapping("/list2")
+	@ResponseBody
+	public TableDataInfo listByCity(Stagnationpoint stagnationpoint)
+	{
+		stagnationpoint.setStagAddress("广东省深圳市");
+		startPage();
+		List<Stagnationpoint> list = stagnationpointService.selectStagnationpointList(stagnationpoint);
+		return getDataTable(list);
+	}
 	
 	/**
 	 * 导出驻点管理列表
