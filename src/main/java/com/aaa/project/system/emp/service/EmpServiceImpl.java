@@ -31,7 +31,19 @@ public class EmpServiceImpl implements IEmpService
 	{
 	    return empMapper.selectEmpById(empno);
 	}
-	
+
+	@Override
+	public boolean empLogin(String phone, String password) {
+		Emp emp = new Emp();
+		emp.setPhone(phone);
+		emp.setPassword(password);
+		Emp emp1 = empMapper.selectEmp(emp);
+		if (emp1 != null){
+			return true;
+		}
+		return false;
+	}
+
 	/**
      * 查询代维公司代维人员列表
      * 

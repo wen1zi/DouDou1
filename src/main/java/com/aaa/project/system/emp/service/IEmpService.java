@@ -18,6 +18,8 @@ public interface IEmpService
      * @return 代维公司代维人员信息
      */
 	public Emp selectEmpById(Integer empno);
+
+	boolean empLogin(String phone,String password);
 	
 	/**
      * 查询代维公司代维人员列表

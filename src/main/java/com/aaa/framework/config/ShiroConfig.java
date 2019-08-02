@@ -247,6 +247,9 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/aaa/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
+        filterChainDefinitionMap.put("/system/emp/login","anon");
+        filterChainDefinitionMap.put("/system/emp/list","anon");
+        filterChainDefinitionMap.put("/system/plans/list","anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问

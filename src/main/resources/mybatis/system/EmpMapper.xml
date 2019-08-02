@@ -39,7 +39,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectEmpVo"/>
         where empno = #{empno}
     </select>
-        
+    <select id="selectEmp" resultType="com.aaa.project.system.emp.domain.Emp" resultMap="EmpResult">
+        select * from emp where phone=#{phone} and password=#{password}
+    </select>
+
     <insert id="insertEmp" parameterType="Emp">
         insert into emp
 		<trim prefix="(" suffix=")" suffixOverrides=",">
