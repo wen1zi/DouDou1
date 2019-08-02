@@ -1,9 +1,14 @@
 package com.aaa.project.system.taskinfo.controller;
 
 import java.util.List;
+
+import com.aaa.project.system.networkresource.domain.Networkresource;
+import com.aaa.project.system.networkresource.mapper.NetworkresourceMapper;
+import com.aaa.project.system.networkresource.service.INetworkresourceService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +24,8 @@ import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.common.utils.poi.ExcelUtil;
 
+import javax.annotation.Resource;
+
 /**
  * 巡检资源关系 信息操作处理
  * 
@@ -33,7 +40,10 @@ public class TaskinfoController extends BaseController
 	
 	@Autowired
 	private ITaskinfoService taskinfoService;
-	
+
+	@Resource
+	private NetworkresourceMapper networkresourceMapper;
+
 	@RequiresPermissions("system:taskinfo:view")
 	@GetMapping()
 	public String taskinfo()
@@ -101,27 +111,42 @@ public class TaskinfoController extends BaseController
 	}
 	
 	/**
-	 * 修改保存巡检资源关系
+	 * 分配资源
 	 */
 	@RequiresPermissions("system:taskinfo:edit")
 	@Log(title = "巡检资源关系", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
+	@Transactional
 	@ResponseBody
 	public AjaxResult editSave(Taskinfo taskinfo)
-	{		
+	{
+		Networkresource networkresource=new Networkresource();
+		networkresource.setResName(taskinfo.getResName());
+		networkresource.setStagId(taskinfo.getStagId());
+		networkresourceMapper.updateNetworkresourceByResName(networkresource);
+		taskinfo.setTaskStatus("已分配");
 		return toAjax(taskinfoService.updateTaskinfo(taskinfo));
 	}
 	
 	/**
-	 * 删除巡检资源关系
+	 * 释放巡检资源关系
 	 */
 	@RequiresPermissions("system:taskinfo:remove")
 	@Log(title = "巡检资源关系", businessType = BusinessType.DELETE)
+	@Transactional
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
-		return toAjax(taskinfoService.deleteTaskinfoByIds(ids));
+	{
+		Integer taskNum=Integer.parseInt(ids);
+		Taskinfo taskinfo = taskinfoService.selectTaskinfoById(taskNum);
+		taskinfo.setStagId(0);
+		Networkresource networkresource=new Networkresource();
+		networkresource.setResName(taskinfo.getResName());
+		networkresource.setStagId(0);
+		networkresourceMapper.updateNetworkresourceByResName(networkresource);
+		taskinfo.setTaskStatus("未分配");
+		return toAjax(taskinfoService.updateTaskinfo(taskinfo));
 	}
 	
 }

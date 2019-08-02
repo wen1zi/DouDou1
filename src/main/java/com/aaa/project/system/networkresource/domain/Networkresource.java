@@ -1,8 +1,7 @@
 package com.aaa.project.system.networkresource.domain;
 
 import com.aaa.framework.web.domain.BaseEntity;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Date;
 
@@ -29,6 +28,7 @@ public class Networkresource extends BaseEntity
 	/** 代维驻点 */
 	private Integer stagId;
 	/** 入网时间 */
+	@JSONField(format ="yyyy-MM-dd HH:mm:ss")
 	private Date resTime;
 	/** 经度 */
 	private Float longitude;

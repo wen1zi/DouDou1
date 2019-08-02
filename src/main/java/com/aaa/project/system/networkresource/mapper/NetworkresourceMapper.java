@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 网络资源 数据层
  * 
- * @author teacherChen
+ * @author
  * @date 2019-07-30
  */
 public interface NetworkresourceMapper 
@@ -43,7 +43,13 @@ public interface NetworkresourceMapper
      * @return 结果
      */
 	public int updateNetworkresource(Networkresource networkresource);
-	
+
+	/**
+	 * 根据资源名称称修改信息
+	 * @param networkresource
+	 * @return
+	 */
+	public int updateNetworkresourceByResName(Networkresource networkresource);
 	/**
      * 删除网络资源
      * 
@@ -59,5 +65,7 @@ public interface NetworkresourceMapper
      * @return 结果
      */
 	public int deleteNetworkresourceByIds(String[] resIds);
+
+
 	
 }
