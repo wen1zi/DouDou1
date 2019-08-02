@@ -1,14 +1,13 @@
 package com.aaa.project.system.networkresource.service;
 
 import com.aaa.project.system.networkresource.domain.Networkresource;
-
 import java.util.List;
 
 /**
  * 网络资源 服务层
  * 
- * @author teacherChen
- * @date 2019-07-30
+ * @author toneySong
+ * @date 2019-08-02
  */
 public interface INetworkresourceService 
 {
@@ -18,7 +17,7 @@ public interface INetworkresourceService
      * @param resId 网络资源ID
      * @return 网络资源信息
      */
-	public Networkresource selectNetworkresourceById(Integer resId);
+	public Networkresource selectNetworkresourceById(String resId);
 	
 	/**
      * 查询网络资源列表

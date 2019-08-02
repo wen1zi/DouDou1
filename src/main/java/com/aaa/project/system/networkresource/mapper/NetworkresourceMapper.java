@@ -1,14 +1,13 @@
 package com.aaa.project.system.networkresource.mapper;
 
 import com.aaa.project.system.networkresource.domain.Networkresource;
-
-import java.util.List;
+import java.util.List;	
 
 /**
  * 网络资源 数据层
  * 
- * @author
- * @date 2019-07-30
+ * @author toneySong
+ * @date 2019-08-02
  */
 public interface NetworkresourceMapper 
 {
@@ -18,7 +17,7 @@ public interface NetworkresourceMapper
      * @param resId 网络资源ID
      * @return 网络资源信息
      */
-	public Networkresource selectNetworkresourceById(Integer resId);
+	public Networkresource selectNetworkresourceById(String resId);
 	
 	/**
      * 查询网络资源列表
@@ -43,20 +42,14 @@ public interface NetworkresourceMapper
      * @return 结果
      */
 	public int updateNetworkresource(Networkresource networkresource);
-
-	/**
-	 * 根据资源名称称修改信息
-	 * @param networkresource
-	 * @return
-	 */
-	public int updateNetworkresourceByResName(Networkresource networkresource);
+	
 	/**
      * 删除网络资源
      * 
      * @param resId 网络资源ID
      * @return 结果
      */
-	public int deleteNetworkresourceById(Integer resId);
+	public int deleteNetworkresourceById(String resId);
 	
 	/**
      * 批量删除网络资源
@@ -65,7 +58,5 @@ public interface NetworkresourceMapper
      * @return 结果
      */
 	public int deleteNetworkresourceByIds(String[] resIds);
-
-
 	
 }

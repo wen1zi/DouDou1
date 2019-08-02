@@ -1,48 +1,39 @@
 package com.aaa.project.system.networkresource.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.util.Date;
 
 /**
  * 网络资源表 networkresource
  * 
- * @author teacherChen
- * @date 2019-07-30
+ * @author toneySong
+ * @date 2019-08-02
  */
 public class Networkresource extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	
-	/** 资源id号 */
-	private Integer resId;
+	/** 资源编号 */
+	private String resId;
 	/** 资源名称 */
 	private String resName;
-	/** 维护资源类型 */
-	private String resType;
 	/** 资源所在市 */
 	private String resCity;
-	/** 资源所在县（区） */
-	private String resCounty;
-	/** 代维驻点 */
-	private Integer stagId;
 	/** 入网时间 */
-	@JSONField(format ="yyyy-MM-dd HH:mm:ss")
 	private Date resTime;
-	/** 经度 */
-	private Float longitude;
-	/** 纬度 */
-	private Float latitude;
+	/** 经纬度 */
+	private String longitudelatitude;
 	/** 是否禁用 */
 	private Integer enable;
 
-	public void setResId(Integer resId) 
+	public void setResId(String resId) 
 	{
 		this.resId = resId;
 	}
 
-	public Integer getResId() 
+	public String getResId() 
 	{
 		return resId;
 	}
@@ -55,15 +46,6 @@ public class Networkresource extends BaseEntity
 	{
 		return resName;
 	}
-	public void setResType(String resType) 
-	{
-		this.resType = resType;
-	}
-
-	public String getResType() 
-	{
-		return resType;
-	}
 	public void setResCity(String resCity) 
 	{
 		this.resCity = resCity;
@@ -72,24 +54,6 @@ public class Networkresource extends BaseEntity
 	public String getResCity() 
 	{
 		return resCity;
-	}
-	public void setResCounty(String resCounty) 
-	{
-		this.resCounty = resCounty;
-	}
-
-	public String getResCounty() 
-	{
-		return resCounty;
-	}
-	public void setStagId(Integer stagId)
-	{
-		this.stagId = stagId;
-	}
-
-	public Integer getStagId()
-	{
-		return stagId;
 	}
 	public void setResTime(Date resTime) 
 	{
@@ -100,23 +64,14 @@ public class Networkresource extends BaseEntity
 	{
 		return resTime;
 	}
-	public void setLongitude(Float longitude) 
+	public void setLongitudelatitude(String longitudelatitude) 
 	{
-		this.longitude = longitude;
+		this.longitudelatitude = longitudelatitude;
 	}
 
-	public Float getLongitude() 
+	public String getLongitudelatitude() 
 	{
-		return longitude;
-	}
-	public void setLatitude(Float latitude) 
-	{
-		this.latitude = latitude;
-	}
-
-	public Float getLatitude() 
-	{
-		return latitude;
+		return longitudelatitude;
 	}
 	public void setEnable(Integer enable) 
 	{
@@ -128,19 +83,14 @@ public class Networkresource extends BaseEntity
 		return enable;
 	}
 
-	@Override
-	public String toString() {
-		return "Networkresource{" +
-				"resId=" + resId +
-				", resName='" + resName + '\'' +
-				", resType='" + resType + '\'' +
-				", resCity='" + resCity + '\'' +
-				", resCounty='" + resCounty + '\'' +
-				", stagId=" + stagId +
-				", resTime=" + resTime +
-				", longitude=" + longitude +
-				", latitude=" + latitude +
-				", enable=" + enable +
-				'}';
-	}
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("resId", getResId())
+            .append("resName", getResName())
+            .append("resCity", getResCity())
+            .append("resTime", getResTime())
+            .append("longitudelatitude", getLongitudelatitude())
+            .append("enable", getEnable())
+            .toString();
+    }
 }

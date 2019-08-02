@@ -1,21 +1,21 @@
 package com.aaa.project.system.networkresource.service;
 
-import com.aaa.common.support.Convert;
-import com.aaa.project.system.networkresource.domain.Networkresource;
-import com.aaa.project.system.networkresource.mapper.NetworkresourceMapper;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import com.aaa.project.system.networkresource.mapper.NetworkresourceMapper;
+import com.aaa.project.system.networkresource.domain.Networkresource;
+import com.aaa.project.system.networkresource.service.INetworkresourceService;
+import com.aaa.common.support.Convert;
 
 /**
  * 网络资源 服务层实现
  * 
- * @author teacherChen
- * @date 2019-07-30
+ * @author toneySong
+ * @date 2019-08-02
  */
-@Service("networkresourceServiceImpl")
-public class NetworkresourceServiceImpl implements INetworkresourceService
+@Service
+public class NetworkresourceServiceImpl implements INetworkresourceService 
 {
 	@Autowired
 	private NetworkresourceMapper networkresourceMapper;
@@ -27,7 +27,7 @@ public class NetworkresourceServiceImpl implements INetworkresourceService
      * @return 网络资源信息
      */
     @Override
-	public Networkresource selectNetworkresourceById(Integer resId)
+	public Networkresource selectNetworkresourceById(String resId)
 	{
 	    return networkresourceMapper.selectNetworkresourceById(resId);
 	}

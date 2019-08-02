@@ -1,29 +1,32 @@
 package com.aaa.project.system.networkresource.controller;
 
-import com.aaa.common.utils.poi.ExcelUtil;
-import com.aaa.framework.aspectj.lang.annotation.Log;
-import com.aaa.framework.aspectj.lang.enums.BusinessType;
-import com.aaa.framework.web.controller.BaseController;
-import com.aaa.framework.web.domain.AjaxResult;
-import com.aaa.framework.web.page.TableDataInfo;
-import com.aaa.project.system.networkresource.domain.Networkresource;
-import com.aaa.project.system.networkresource.service.INetworkresourceService;
-import com.aaa.project.system.taskinfo.domain.Taskinfo;
-import com.aaa.project.system.taskinfo.service.ITaskinfoService;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.aaa.framework.aspectj.lang.annotation.Log;
+import com.aaa.framework.aspectj.lang.enums.BusinessType;
+import com.aaa.project.system.networkresource.domain.Networkresource;
+import com.aaa.project.system.networkresource.service.INetworkresourceService;
+import com.aaa.framework.web.controller.BaseController;
+import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.common.utils.poi.ExcelUtil;
 
 /**
  * 网络资源 信息操作处理
  * 
- * @author
- * @date 2019-07-30
+ * @author toneySong
+ * @date 2019-08-02
  */
 @Controller
 @RequestMapping("/system/networkresource")
@@ -33,12 +36,6 @@ public class NetworkresourceController extends BaseController
 	
 	@Autowired
 	private INetworkresourceService networkresourceService;
-
-	/**
-	 * 自动注入巡检资源关系业务接口
-	 */
-	@Autowired
-	private ITaskinfoService taskinfoService;
 	
 	@RequiresPermissions("system:networkresource:view")
 	@GetMapping()
@@ -55,7 +52,6 @@ public class NetworkresourceController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(Networkresource networkresource)
 	{
-		networkresource.setEnable(1);
 		startPage();
         List<Networkresource> list = networkresourceService.selectNetworkresourceList(networkresource);
 		return getDataTable(list);
@@ -85,19 +81,18 @@ public class NetworkresourceController extends BaseController
 	}
 	
 	/**
-	 * 新增保存网络资源,同时把资源加入到巡检资源关系库中
+	 * 新增保存网络资源
 	 */
 	@RequiresPermissions("system:networkresource:add")
 	@Log(title = "网络资源", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
-	@Transactional
 	@ResponseBody
 	public AjaxResult addSave(Networkresource networkresource)
 	{
-		Taskinfo taskinfo=new Taskinfo();
-		taskinfo.setResName(networkresource.getResName());
-		taskinfo.setStagId(networkresource.getStagId());
-		taskinfoService.insertTaskinfo(taskinfo);
+		//设置资源id，保证不重复
+		networkresource.setResId(UUID.randomUUID().toString());
+		//设置时间，获取当时时间
+		networkresource.setResTime(new Date());
 		return toAjax(networkresourceService.insertNetworkresource(networkresource));
 	}
 
@@ -105,7 +100,7 @@ public class NetworkresourceController extends BaseController
 	 * 修改网络资源
 	 */
 	@GetMapping("/edit/{resId}")
-	public String edit(@PathVariable("resId") Integer resId, ModelMap mmap)
+	public String edit(@PathVariable("resId") String resId, ModelMap mmap)
 	{
 		Networkresource networkresource = networkresourceService.selectNetworkresourceById(resId);
 		mmap.put("networkresource", networkresource);
@@ -132,8 +127,7 @@ public class NetworkresourceController extends BaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-
-	{
+	{		
 		return toAjax(networkresourceService.deleteNetworkresourceByIds(ids));
 	}
 	
